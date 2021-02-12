@@ -1,0 +1,85 @@
+	@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+	.wrap{
+		height: 100vh;
+		width: 100%;
+		display: flex;
+		-webkit-justify-content: center;
+		        justify-content: center;
+		-webkit-align-items: center;
+		        align-items: center;
+		font-family: 'Roboto', sans-serif;
+	}
+	.q-wrap{
+		height: 750px;
+		width: 1200px;
+		background-color: #FAFAFA;
+
+	}
+
+	.q-progress{
+		height: 50px;
+		width: 100%;
+		background-color:#F5F5F5;		
+		position: relative;
+	}
+	.q-progress_line{
+		position: absolute;
+		height: 100%;
+		background-color: black;
+	}
+	.q-content{
+		height: 700px;
+		padding: 20px 50px;
+		display: flex;
+		-webkit-flex-direction: column;
+		    -ms-flex-direction: column;
+		        flex-direction: column;
+	}
+	.q-content_form{
+		height: 100%;
+		display: flex;
+	    flex-direction: column;
+	    justify-content: center;
+	    align-items: center;    
+	}
+	.q-content_form input{
+		width: 250px;
+	}
+
+	.q-content_form-btn button{
+		width: 150px;
+		margin-top: 2em;
+	}
+	.q-content_block{
+		/*display: none;*/
+		
+	}
+	.q-content_block-title{}
+	.q-content_block-item{
+		/*display: none;*/
+	}
+	.q-content_block-item p{
+		display: inline-block;
+		margin-right: 20px;
+		width: 410px;
+	}
+	.q-content_block-item input{
+		margin: 0 10px 0 5px;
+	}
+	.q-result{
+		height: 700px;
+		display: none;
+		padding: 20px 50px;
+	}
+	.q-result_title{
+		text-align: center;
+	}
+	.q-result_item{
+		display: flex;
+		align-items: center;
+	}
+	.q-result_item-number{
+		margin-left: 20px;
+		font-size: 25px;
+		font-weight: 400;
+	}
