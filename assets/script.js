@@ -338,7 +338,7 @@ function postResults(){
 		method: 'POST',
 		cache: 'no-cache',
 		redirect: 'follow',
-		body: 'JSON.stringify({first:"Sam",last:"Poul",phone:"1122334455"})'
+		body: 'JSON.stringify({"first":"Sam","last":"Poul","phone":"1122334455"})'
 	})
 	.then(r => r.json())
 	.then(r => console.log(r))
