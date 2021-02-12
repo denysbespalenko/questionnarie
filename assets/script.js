@@ -343,3 +343,21 @@ function postResults(){
 	.then(r => r.json())
 	.then(r => console.log(r))
 }
+function sendUser(){
+	var myHeaders = new Headers();
+myHeaders.append("Content-Type", "text/plain");
+
+var raw = "{\"first\":\"Sam\",\"last\":\"Poul\",\"phone\":\"1122334455\"}";
+
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: raw,
+  redirect: 'follow'
+};
+
+fetch("https://script.google.com/macros/s/AKfycbwmC1LQ1LgReXXJ1iJDgRFItIWsq4KKpL29OjV8eGQU7wqwiQ/exec", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+}
