@@ -1,13 +1,10 @@
-function newDomElement(t,c){
-	    let newElement = document.createElement(t);
-    	newElement.classList.add(c);
-    	return newElement;
-	}
 const result = {
 	user:{},
 	answers:{},
 	userFactors:{}
 }
+
+const obj = {};
 const reverseCount = {
 	1:5,
 	2:4,
@@ -281,7 +278,8 @@ $('.q-content_block').each(function(){
     	    	showResult();
     	    	scoreCount();
     	    	maxMeanCount();
-    	    	postResults();		
+    	    	objToSend(result);
+    	    	postResults(obj);		
     	    }
     })   
 })
@@ -330,26 +328,20 @@ function maxMeanDraw(total,mean){
 	$('.q-result').append(`<div class='q-result_item'><h2 class="q-result_item-title">Total: </h2>${totalSelector}</div>`)
 				  .append(`<div class='q-result_item'><h2 class="q-result_item-title">Mean: </h2>${meanSelector}</div>`);
 }
-
-function postResults(){
-
-	const url="https://script.google.com/macros/s/AKfycbwJKxYM0g8pfIbCuTCSuGP3f2WczZpVAU5jfYQ/exec";
-	fetch(url,{
-		method: 'POST',
-		cache: 'no-cache',
-		redirect: 'follow',
-		body: 'JSON.stringify({"first":"Sam","last":"Poul","phone":"1122334455"})'
-	})
-	.then(r => r.json())
-	.then(r => console.log(r))
+function objToSend(object){
+	for(let i in object){
+    obj[i]='';
+    for(let ii in object[i]){
+        obj[ii] = object[i][ii]
+    }
 }
-function sendUser(){
-	var myHeaders = new Headers();
-myHeaders.append("Content-Type", "text/plain");
+}
 
-var raw = "{\"first\":\"Sam\",\"last\":\"Poul\",\"phone\":\"1122334455\"}";
 
-var requestOptions = {
+function postResults(obj){
+let myHeaders = new Headers();
+let raw = JSON.stringify(obj);
+let requestOptions = {
   method: 'POST',
   headers: myHeaders,
   body: raw,
