@@ -51,12 +51,12 @@
 		margin-top: 2em;
 	}
 	.q-content_block{
-		/*display: none;*/
+		display: none;
 		
 	}
 	.q-content_block-title{}
 	.q-content_block-item{
-		/*display: none;*/
+		display: none;
 	}
 	.q-content_block-item p{
 		display: inline-block;
