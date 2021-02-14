@@ -205,10 +205,10 @@ jQuery(document).ready(function() {
 	//save form to result.user obj
 	$('.q-content_form-btn button').click(()=>{
 		event.preventDefault();
-		result.user.firstname = $('#firstname').attr('value');
-		result.user.lastname	=  $('#lastname').attr('value');
-		result.user.email = $('#email').attr('value');
-		result.user.profession = $('#profession').attr('value');
+		result.user.firstname = $('#firstname').val();
+		result.user.lastname	=  $('#lastname').val();
+		result.user.email = $('#email').val();
+		result.user.profession = $('#profession').val();
 		$('.q-content_form').hide();
 		$('.q-content_block').first().show();
 		$('.q-content_block-item').first().show();
