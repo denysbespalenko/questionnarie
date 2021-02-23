@@ -1,3 +1,8 @@
+function newDomElement(t,c){
+	    let newElement = document.createElement(t);
+    	newElement.classList.add(c);
+    	return newElement;
+	}
 const result = {
 	user:{},
 	answers:{},
@@ -203,7 +208,7 @@ const Questionnaire = {
 
 jQuery(document).ready(function() {
 	//save form to result.user obj
-	$('.q-content_form-btn button').click(()=>{
+	$('.q-content_form-btn button').click((event)=>{
 		event.preventDefault();
 		result.user.firstname = $('#firstname').val();
 		result.user.lastname	=  $('#lastname').val();
@@ -212,7 +217,7 @@ jQuery(document).ready(function() {
 		$('.q-content_form').hide();
 		$('.q-content_block').first().show();
 		$('.q-content_block-item').first().show();
-		console.log(result)
+		// validateInputs('#firstname','#lastname','#email','#profession');
 	});
 
 
@@ -319,6 +324,7 @@ function maxMeanCount(){
     	total += result.userFactors[item];   
     	mean+= result.userFactors[item] / resultsCount;
 	}
+	result.userFactors['User Average'] = +mean.toFixed(0);
 	maxMeanDraw(total,mean.toFixed(0));
 }
 
@@ -348,8 +354,39 @@ let requestOptions = {
   redirect: 'follow'
 };
 
-fetch("https://script.google.com/macros/s/AKfycbwmC1LQ1LgReXXJ1iJDgRFItIWsq4KKpL29OjV8eGQU7wqwiQ/exec", requestOptions)
+fetch("https://script.google.com/macros/s/AKfycbye7wMDg5gkcFDn9MWUT-XCcK0BtDqTAXAivF4bJRyRuBY4Ar0T8Io/exec", requestOptions)
   .then(response => response.text())
-  .then(result => console.log(result))
+  .then(result => drawDownloadButton(result))
   .catch(error => console.log('error', error));
+}
+
+function drawDownloadButton(url){
+	let prepaderUrl = url.slice(1,url.length-1)
+	$('.q-result').append(`<div class="q-result_link"><a>Download result</a></div>`)
+	$('.q-result_link a').attr('target','_blank')
+	$('.q-result_link a').attr('href', prepaderUrl);
+	$('.q-result_link a').get(0).click();
+
+}
+
+function validateInputs(){
+	let IDs = [...arguments];
+
+
+	IDs.forEach((input,index) => {
+		if ($(`${input}`).val().length < 0) IDs.forEach(input => ($(`${input}`).val().length)
+			? $(`${input}`).parent().addClass('ok')
+			: $(`${input}`).parent().addClass('error'));
+		if($(`${input}`).val().length > 0 &&  index === IDs.length-1) goNext();
+	});	
+	// result.user.firstname = $('#firstname').val();
+	// result.user.lastname	=  $('#lastname').val();
+	// result.user.email = $('#email').val();
+	// result.user.profession = $('#profession').val();
+
+	function goNext(){
+	$('.q-content_form').hide();
+	$('.q-content_block').first().show();
+	$('.q-content_block-item').first().show();
+	}
 }
