@@ -83,3 +83,30 @@
 		font-size: 25px;
 		font-weight: 400;
 	}
+	.q-result_link{
+		text-align: center;
+	}
+	.q-result_link a{	
+		text-decoration: none;
+  	    padding: 15px 30px;
+    	background-color: black;
+    	color: white;
+   		border-radius: 30px;
+	}
+
+
+	.error input{
+		border-color: red;
+		outline: none;
+	}
+	.error label{
+		color: red;
+	}
+
+	.ok input{
+		border-color: green;
+		outline: none;
+	}
+	.ok label{
+		color: green;
+	}
