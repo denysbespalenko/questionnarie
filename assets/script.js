@@ -207,9 +207,16 @@ const Questionnaire = {
 }
 
 jQuery(document).ready(function() {
+
+	$('.q-content_form input').focusout(function(){
+    	($(this).val())
+    	?$(this).css('border','3px solid green')
+    	:$(this).css('border','3px solid red')
+	})
 	//save form to result.user obj
 	$('.q-content_form-btn button').click((event)=>{
 		event.preventDefault();
+		if(validateInputs()){
 		result.user.firstname = $('#firstname').val();
 		result.user.lastname	=  $('#lastname').val();
 		result.user.email = $('#email').val();
@@ -217,9 +224,8 @@ jQuery(document).ready(function() {
 		$('.q-content_form').hide();
 		$('.q-content_block').first().show();
 		$('.q-content_block-item').first().show();
-		// validateInputs('#firstname','#lastname','#email','#profession');
+		}
 	});
-
 
 })
 
@@ -370,23 +376,15 @@ function drawDownloadButton(url){
 }
 
 function validateInputs(){
-	let IDs = [...arguments];
-
-
-	IDs.forEach((input,index) => {
-		if ($(`${input}`).val().length < 0) IDs.forEach(input => ($(`${input}`).val().length)
-			? $(`${input}`).parent().addClass('ok')
-			: $(`${input}`).parent().addClass('error'));
-		if($(`${input}`).val().length > 0 &&  index === IDs.length-1) goNext();
-	});	
-	// result.user.firstname = $('#firstname').val();
-	// result.user.lastname	=  $('#lastname').val();
-	// result.user.email = $('#email').val();
-	// result.user.profession = $('#profession').val();
-
-	function goNext(){
-	$('.q-content_form').hide();
-	$('.q-content_block').first().show();
-	$('.q-content_block-item').first().show();
-	}
+	let isOk = true;
+	
+	$('.q-content_form input').each(function(){
+    	if($(this).val().length <= 0){
+    	 $(this).css('border','3px solid red');
+    	  isOk = false ;
+    	} else{
+    	 $(this).css('border','3px solid green');
+    	}
+	})
+	return isOk;
 }
