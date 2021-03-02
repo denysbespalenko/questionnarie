@@ -210,8 +210,15 @@ jQuery(document).ready(function() {
 
 	$('.q-content_form input').focusout(function(){
     	($(this).val())
-    	?$(this).css('border','3px solid green')
-    	:$(this).css('border','3px solid red')
+    	?$(this).css('background-color','#DFF7F4')
+    	:$(this).css('background-color','#FAE1DB')
+
+    	if($(this).attr('id') === 'email'){
+    		(validateEmail($(this).val()))
+    		?$(this).css('background-color','#DFF7F4')
+    		:$(this).css('background-color','#FAE1DB')
+    	}
+
 	})
 	//save form to result.user obj
 	$('.q-content_form-btn button').click((event)=>{
@@ -222,10 +229,15 @@ jQuery(document).ready(function() {
 		result.user.email = $('#email').val();
 		result.user.profession = $('#profession').val();
 		$('.q-content_form').hide();
-		$('.q-content_block').first().show();
-		$('.q-content_block-item').first().show();
+		$('.q-content_faq').css('display','flex');
 		}
 	});
+
+	$('.q-content_faq-btn button').click(()=>{
+		$('.q-content_faq').hide();
+		$('.q-content_block').first().css('display','flex');
+		$('.q-content_block-item').first().show();
+	})
 
 })
 
@@ -282,7 +294,7 @@ $('.q-content_block').each(function(){
 	
     $(this).children().last().children('input').click(function(){		
     	thisBlock.hide();
-    	thisBlock.next().show();
+    	thisBlock.next().css('display','flex');
     	thisBlock.next().children('.q-content_block-item').first().show();
     	
     	    if(thisBlock.attr('class') == $('.q-content_block').last().attr('class')){
@@ -297,7 +309,7 @@ $('.q-content_block').each(function(){
 
 function showResult(){
 	$('.q-content').hide();
-	$('.q-result').show();
+	$('.q-result').css('display','flex');
 }
 function scoreCount(){
 	$('.q-content_block').each(function(){
@@ -313,12 +325,31 @@ function scoreCount(){
 		result.userFactors[factorName] = factorResult;
 		scoreDraw(factorName,factorResult);
 	})
+	requestWait();
+
 }
 
 function scoreDraw(blockName,blockResult){
 	let nameSelector = `<h2 class="q-result_item-title">${blockName}</h2>`;
 	let resultSelector = `<p class="q-result_item-number">${blockResult}</p>`;
 	$('.q-result').append(`<div class='q-result_item'>${nameSelector}${resultSelector}</div>`);
+}
+
+function requestWait(){
+
+	$('.q-result').append(`<p class="timer">File collection time is: <span>30</span> seconds</p>`);
+
+	let thisTimer = setInterval(function(){
+		startTimer();
+	},1200);
+	let counter = 30
+
+	function startTimer(){
+		(counter >= 1)? --counter: clearInterval(thisTimer);
+		console.log(counter);
+		$('p.timer span').text(counter);
+	}
+
 }
 
 function maxMeanCount(){
@@ -331,7 +362,7 @@ function maxMeanCount(){
     	mean+= result.userFactors[item] / resultsCount;
 	}
 	result.userFactors['User Average'] = +mean.toFixed(0);
-	maxMeanDraw(total,mean.toFixed(0));
+	// maxMeanDraw(total,mean.toFixed(0));
 }
 
 function maxMeanDraw(total,mean){
@@ -368,22 +399,35 @@ fetch("https://script.google.com/macros/s/AKfycbye7wMDg5gkcFDn9MWUT-XCcK0BtDqTAX
 
 function drawDownloadButton(url){
 	let prepaderUrl = url.slice(1,url.length-1)
+	$('p.timer').hide();
 	$('.q-result').append(`<div class="q-result_link"><a>Download result</a></div>`)
 	$('.q-result_link a').attr('target','_blank')
 	$('.q-result_link a').attr('href', prepaderUrl);
 	$('.q-result_link a').get(0).click();
 
 }
-
+function validateEmail(email) {
+  const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(email);
+}
 function validateInputs(){
 	let isOk = true;
-	
 	$('.q-content_form input').each(function(){
     	if($(this).val().length <= 0){
-    	 $(this).css('border','3px solid red');
+    	  $(this).css('background-color','#FAE1DB');
     	  isOk = false ;
     	} else{
-    	 $(this).css('border','3px solid green');
+    	 $(this).css('background-color','#DFF7F4');
+    	}
+
+    	if($(this).attr('id') === 'email'){
+    		if(validateEmail($(this).val())) {
+    			$(this).css('background-color','#DFF7F4')}
+    		else{
+    		 	$(this).css('background-color','#FAE1DB');
+    	  		isOk = false ;	
+    		}	
+    		
     	}
 	})
 	return isOk;
